@@ -10,8 +10,8 @@ enum Operators {
 }
 
 export const useCalculator = () => {
-  const [prevNumber, setPrevNumber] = useState('123456789101112');
-  const [number, setNumber] = useState('123456789101112');
+  const [prevNumber, setPrevNumber] = useState('0');
+  const [number, setNumber] = useState('0');
 
   const operation = useRef<Operators>();
 
@@ -19,18 +19,42 @@ export const useCalculator = () => {
     if (number === '0') {
       setNumber(n);
     } else {
-      if (prevNumber.substr(0, 1) === '-') {
-        if (number.length >= 11) {
-          Alert.alert('', 'It is not possible to enter more than 10 digits', [
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ]);
+      if (+number < 0) {
+        if (number.includes('.')) {
+          if (number.length >= 14) {
+            Alert.alert('', 'It is not possible to enter more than 12 digits', [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]);
+          } else {
+            setNumber(number + n);
+          }
+        } else {
+          if (number.length >= 13) {
+            Alert.alert('', 'It is not possible to enter more than 12 digits', [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]);
+          } else {
+            setNumber(number + n);
+          }
         }
-      } else if (number.length >= 10) {
-        Alert.alert('', 'It is not possible to enter more than 10 digits', [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ]);
       } else {
-        setNumber(number + n);
+        if (number.includes('.')) {
+          if (number.length >= 13) {
+            Alert.alert('', 'It is not possible to enter more than 12 digits', [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]);
+          } else {
+            setNumber(number + n);
+          }
+        } else {
+          if (number.length >= 12) {
+            Alert.alert('', 'It is not possible to enter more than 12 digits', [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]);
+          } else {
+            setNumber(number + n);
+          }
+        }
       }
     }
   };
@@ -52,10 +76,12 @@ export const useCalculator = () => {
       textColor: '#000000',
       doubleSize: false,
       action: () => {
-        if (number.substr(0, 1) === '-') {
-          setNumber(number.slice(1));
-        } else {
-          setNumber('-' + number);
+        if (number !== '0') {
+          if (number.substr(0, 1) === '-') {
+            setNumber(number.slice(1));
+          } else {
+            setNumber('-' + number);
+          }
         }
       },
     },
@@ -66,7 +92,11 @@ export const useCalculator = () => {
       doubleSize: false,
       action: () => {
         if (number !== '0') {
-          setNumber(number.substr(0, number.length - 1));
+          if (+number > -10 && +number < 10) {
+            setNumber('0');
+          } else {
+            setNumber(number.substr(0, number.length - 1));
+          }
         }
       },
     },
@@ -220,7 +250,7 @@ export const useCalculator = () => {
       textColor: '#ffffff',
       doubleSize: false,
       action: () => {
-        if (!number.includes('.')) {
+        if (!number.includes('.') && +number <= 99999999999) {
           setNumber(number + '.');
         }
       },
@@ -258,9 +288,15 @@ export const useCalculator = () => {
 
           case Operators.divide:
             if (prevNumber) {
-              setNumber(`${+prevNumber / +number}`);
-              setPrevNumber('');
-              operation.current = Operators.null;
+              if (+number === 0) {
+                Alert.alert('', 'Cannot divide by "0"', [
+                  {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ]);
+              } else {
+                setNumber(`${+prevNumber / +number}`);
+                setPrevNumber('');
+                operation.current = Operators.null;
+              }
             }
             break;
         }

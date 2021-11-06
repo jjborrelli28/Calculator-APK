@@ -16,12 +16,22 @@ export const styles = StyleSheet.create({
     paddingVertical: 15,
     justifyContent: 'flex-end',
   },
-  result: {
+  xlResult: {
     color: 'white',
     fontSize: 60,
     textAlign: 'right',
   },
-  smallResult: {
+  mdResult: {
+    color: 'white',
+    fontSize: 40,
+    textAlign: 'right',
+  },
+  smResult: {
+    color: 'white',
+    fontSize: 30,
+    textAlign: 'right',
+  },
+  prevNumber: {
     color: 'rgba(255,255,255,.5)',
     fontSize: 30,
     textAlign: 'right',
@@ -30,6 +40,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     flexWrap: 'wrap',
+    marginTop: 7.5,
   },
   btn: {
     height: 80,
