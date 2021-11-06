@@ -1,9 +1,12 @@
+import {Alert} from 'react-native';
+
 export const buttons = [
   {
     symbol: 'C',
     backgroundColor: '#9b9b9b',
     textColor: '#000000',
     doubleSize: false,
+    action: n => (n = 0),
   },
   {
     symbol: '+/-',
@@ -91,7 +94,7 @@ export const buttons = [
   },
   {
     symbol: '+',
-    backgroundColor: '#2d2d2d',
+    backgroundColor: '#ff9427',
     textColor: '#ffffff',
     doubleSize: false,
   },
